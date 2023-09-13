@@ -61,10 +61,25 @@ app.post('/api/events', async (req, res) =>{
     }
 })
 
+//DELETE FROM events WHERE id=5;
+app.delete('/api/events/:id', async (req, res) =>{
+    //TODO - make this delete request work
+    try{
+    const eventId = req.params.id;
+    const deleteOperation = await db.query("DELETE FROM events WHERE id=$1", [eventId]);
+    console.log(deleteOperation);
+    res.status(200).end()
 
-// app.delete('/api/events/:id', async (req, res) =>{
-//     //TODO - make this delete request work
-// }
+    } catch(error){
+        console.log(error);
+        res.status(400).json({error});
+    }
+})
+
+//UPDATING something in the DB
+// app.put('/api/events/:id', async (req, res) =>{
+
+// })
 
 
 app.listen(PORT, () => console.log(`Hola! Server running on Port http://localhost:${PORT}`));

@@ -29,6 +29,17 @@ function Events() {
       setEvents([...events, data])
     })
 }
+
+const handleDeleteRequest = (id) => {
+  //console.log("From the events list", id);
+  fetch(`http://localhost:8080/api/events/${id}`, {
+    method: "DELETE"
+  }).then((response) => {
+    if(response.status === 200) {
+      getRequest()
+    }
+  })
+}
   
   useEffect(() => {getRequest()}, []);
 
@@ -37,7 +48,7 @@ function Events() {
     <div>
     <CardGroup className="Events">
             {events.map(event =>
-            <EventCard key={event.id} title={event.title} location={event.location} time={event.eventtime}/>
+            <EventCard key={event.id} event={event} onDelete={handleDeleteRequest}/>
             )}
     </CardGroup>
     </div>
